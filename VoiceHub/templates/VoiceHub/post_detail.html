@@ -1,0 +1,12 @@
+{% extends 'VoiceHub/base.html' %}
+
+{% block title %}{{ post.title }} - VoiceHub{% endblock %}
+
+{% block content %}
+  <article class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <small>Created at: {{ post.created_at }}</small>
+    <a href="{% url 'home' %}" class="btn">Back to All Posts</a>
+  </article>
+{% endblock %}
