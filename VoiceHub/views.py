@@ -1,6 +1,21 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
+
+# Signup view
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'VoiceHub/signup.html', {'form': form})
 
 # View to list all posts
 def post_list(request):
@@ -8,6 +23,7 @@ def post_list(request):
     return render(request, 'VoiceHub/post_list.html', {'posts': posts})
 
 # View to create a new post
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
